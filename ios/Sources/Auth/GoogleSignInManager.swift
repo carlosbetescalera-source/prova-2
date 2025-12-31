@@ -5,6 +5,7 @@
 //  Handles Google Sign-In flow with session restore.
 //
 
+#if canImport(GoogleSignIn)
 import GoogleSignIn
 import UIKit
 
@@ -48,3 +49,4 @@ class GoogleSignInManager {
         GIDSignIn.sharedInstance.signOut()
     }
 }
+#endif
