@@ -3,8 +3,10 @@
 //  MyApp
 //
 //  Sign-in screen with Apple and Google authentication options.
+//  Only compiled when Firebase/GoogleSignIn are available.
 //
 
+#if canImport(GoogleSignIn)
 import AuthenticationServices
 import GoogleSignInSwift
 import SwiftUI
@@ -171,3 +173,4 @@ struct LoginView: View {
     LoginView()
         .environmentObject(AuthManager.shared)
 }
+#endif
