@@ -1,1 +1,39 @@
-
+workflows:
+  ios-swiftui-workflow:
+    name: Build iOS SwiftUI App
+    instance_type: mac_mini_m2
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "main"
+          include: true
+          source: true
+    environment:
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.example.myapp
+      vars:
+        XCODE_PROJECT: "iOS/MyApp.xcodeproj"
+        XCODE_SCHEME: "MyApp"
+    scripts:
+      - name: Set up provisioning profiles for Xcode
+        script: xcode-project use-profiles
+      - name: Run iOS tests
+        script: |
+          xcode-project run-tests \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME" \
+            --device "iPhone 14"
+      - name: Build IPA for distribution
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
