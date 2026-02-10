@@ -8,7 +8,7 @@ workflows:
         script: |
           xcodebuild -project iOS/MyApp.xcodeproj \
                      -scheme MyApp \
-                     -destination 'platform=iOS Simulator,name=iPhone 14' \
+                     -destination 'platform=iOS Simulator,name=iPhone 17' \
                      clean build
     artifacts:
       - build/**/*.app
