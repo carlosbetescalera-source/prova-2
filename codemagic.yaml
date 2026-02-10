@@ -24,12 +24,12 @@ workflows:
         script: |
           xcode-project use-profiles
 
-      - name: Build app for personal use
-        script: |
-          xcode-project build-ipa \
-            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
-            --scheme "$XCODE_SCHEME" \
-            --export-method development
+  - name: Build app for personal use
+    script: |
+      xcode-project build-ipa \
+        --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+        --scheme "$XCODE_SCHEME"
+
 
     artifacts:
       - build/ios/ipa/*.ipa
