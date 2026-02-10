@@ -15,10 +15,6 @@ workflows:
       xcode: latest
       cocoapods: default
 
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: com.carlos.privateapp   # CAMBIA SOLO EL NOMBRE SI QUIERES
-
       vars:
         XCODE_PROJECT: "iOS/MyApp.xcodeproj"
         XCODE_SCHEME: "MyApp"
