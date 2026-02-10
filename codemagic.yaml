@@ -1,38 +1,14 @@
 workflows:
-  Build iOS SwiftUI App:
-    name: Build iOS SwiftUI App (Private / Development)
-    instance_type: mac_mini_m2
-
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: "main"
-          include: true
-          source: true
-
+  ios-personal-build:
+    name: Build iOS for Personal Use
     environment:
       xcode: latest
-      cocoapods: default
-
-      vars:
-        XCODE_PROJECT: "iOS/MyApp.xcodeproj"
-        XCODE_SCHEME: "MyApp"
-
     scripts:
-      - name: Use development provisioning profiles
+      - name: Build .app for simulator
         script: |
-          xcode-project use-profiles
-
-  - name: Build app for personal use
-    script: |
-      xcode-project build-ipa \
-        --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
-        --scheme "$XCODE_SCHEME"
-
-
+          xcodebuild -project MyApp.xcodeproj \
+                     -scheme MyApp \
+                     -destination 'platform=iOS Simulator,name=iPhone 14' \
+                     clean build
     artifacts:
-      - build/ios/ipa/*.ipa
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - /tmp/xcodebuild_logs/*.log
-
+      - build/**/*.app
